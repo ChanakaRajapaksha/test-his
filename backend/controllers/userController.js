@@ -38,11 +38,21 @@ exports.login = async (req, res) => {
 
         // Generate JWT
         const token = jwt.sign({ id: user[0].id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-        res.json({ message: "Login successful", token });
+
+        // Include user details in the response (such as name and id)
+        res.json({
+            message: "Login successful",
+            token,
+            user: {
+                id: user[0].id,
+                name: user[0].name, // Include name or any other relevant user data
+            }
+        });
     } catch (error) {
         res.status(500).json({ message: "Database error", error });
     }
 };
+
 
 // Get all users
 exports.getAllUsers = async (req, res) => {

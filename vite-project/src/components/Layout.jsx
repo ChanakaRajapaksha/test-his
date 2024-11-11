@@ -1,5 +1,3 @@
-// Layout.js
-
 import { Outlet } from "react-router-dom";
 import Menu from "./Menu";
 import Navbar from "./Navbar";
