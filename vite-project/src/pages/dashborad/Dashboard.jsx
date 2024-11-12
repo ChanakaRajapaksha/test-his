@@ -1,4 +1,3 @@
-import Announcement from "../../components/Announcement";
 import Appointments from "../../components/Appoinments";
 import AttendanceChart from "../../components/AttendanceChart";
 import FinanceChart from "../../components/FinanceChart";

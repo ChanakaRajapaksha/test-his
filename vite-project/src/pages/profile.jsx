@@ -5,6 +5,7 @@ import { api } from "../api";
 import Appointments from "../components/Appoinments";
 import UpdateUserModal from "../components/UpdateUserModal";
 import Button from "../components/Button";
+import AttendanceChart from "../components/AttendanceChart";
 
 const Profile = () => {
     const { id } = useParams();
@@ -20,6 +21,8 @@ const Profile = () => {
                     console.error("No token found");
                     return;
                 }
+
+                console.log(id)
 
                 const response = await api.get(`/users/${id}`, {
                     headers: {
@@ -66,86 +69,90 @@ const Profile = () => {
     }
 
     return (
-        <div className="flex flex-col xl:flex-row gap-4 p-4 flex-1">
-            {/* LEFT */}
-            <div className="w-full xl:w-2/3">
-                {/* TOP */}
-                <div className="flex flex-col lg:flex-row gap-4">
-                    <div className="px-10 py-6 bg-[#C3EBFA] rounded-md flex flex-1 gap-4">
-                        <div className="w-1/3">
-                            <img
-                                src="https://images.pexels.com/photos/2888150/pexels-photo-2888150.jpeg?auto=compress&cs=tinysrgb&w=1200"
-                                alt="profile"
-                                width={144}
-                                height={144}
-                                className="w-36 h-36 rounded-full object-cover"
-                            />
-                        </div>
-                        <div className="w-2/3 flex flex-col gap-4">
-                            <div className="flex items-center gap-4 mb-6">
-                                <h1 className="text-xl font-semibold">{user.name}</h1>
-                            </div>
-                            <div className="flex items-center flex-wrap gap-2 justify-between text-md font-medium">
-                                <div className="w-full md:w-1/3 lg:w-full 2xl:w-1/3 flex items-center gap-2">
-                                    <img src="/mail.png" alt="blood" width={14} height={14} />
-                                    <span>{user.email}</span>
-                                </div>
-                                <div className="w-full md:w-1/3 lg:w-full 2xl:w-1/3 flex items-center gap-2">
-                                    <span className="text-red-500">Role: {user.role}</span>
-                                </div>
-                                <div className="w-full md:w-1/3 lg:w-full 2xl:w-1/3 flex items-center gap-2">
-                                    <img src="/date.png" alt="blood" width={14} height={14} />
-                                    <span>Age: {user.age}</span>
-                                </div>
-                            </div>
-                            <div className="flex flex-row gap-4">
-                                <Button
-                                    name="Edit Profile"
-                                    isBeam
-                                    containerClass="mt-10 max-content"
-                                    onClick={() => setIsModalOpen(true)}
+        <section>
+            <div className="flex flex-col xl:flex-row gap-4 p-4">
+                {/* LEFT */}
+                <div className="w-full xl:w-2/3">
+                    {/* TOP */}
+                    <div className="flex flex-col lg:flex-row gap-4">
+                        <div className="px-10 py-6 bg-[#C3EBFA] rounded-md flex flex-1 gap-4">
+                            <div className="w-1/3">
+                                <img
+                                    src="https://images.pexels.com/photos/2888150/pexels-photo-2888150.jpeg?auto=compress&cs=tinysrgb&w=1200"
+                                    alt="profile"
+                                    width={144}
+                                    height={144}
+                                    className="w-36 h-36 rounded-full object-cover"
                                 />
-                                <Button
-                                    name="Delete Profile"
-                                    isBeam
-                                    containerClass="mt-10 max-content"
-                                    onClick={handleDelete}
-                                />
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="flex-1 flex justify-between gap-4 flex-wrap">
-                        <div className="bg-[#F1F0FF] p-4 rounded-md flex gap-4 w-full md:w-[48%] xl:w-[45%] 2xl:w-[48%]">
-                            <div className="">
-                                <h1 className="text-xl font-semibold">{user.status ? "Active" : "Inactive"}</h1>
-                                <span className="text-sm text-gray-400">Status</span>
-                                <div className="flex items-center justify-center">
-                                    <img
-                                        src="/status.png"
-                                        alt="status"
-                                        width={40}
-                                        height={40}
-                                        className="w-20 h-20 object-contain"
+                            </div>   
+                            <div className="w-2/3 flex flex-col gap-4">
+                                <div className="flex items-center gap-4 mb-6">
+                                    <h1 className="text-xl font-semibold">{user.name}</h1>
+                                </div>
+                                <div className="flex items-center flex-wrap gap-2 justify-between text-md font-medium">
+                                    <div className="w-full md:w-1/3 lg:w-full 2xl:w-1/3 flex items-center gap-2">
+                                        <img src="/mail.png" alt="blood" width={14} height={14} />
+                                        <span>{user.email}</span>
+                                    </div>
+                                    <div className="w-full md:w-1/3 lg:w-full 2xl:w-1/3 flex items-center gap-2">
+                                        <img src="/date.png" alt="blood" width={14} height={14} />
+                                        <span>Age: {user.age}</span>
+                                    </div>
+                                </div>
+                                <div className="flex flex-row gap-4">
+                                    <Button
+                                        name="Edit Profile"
+                                        isBeam
+                                        containerClass="mt-10 max-content"
+                                        onClick={() => setIsModalOpen(true)}
+                                    />
+                                    <Button
+                                        name="Delete Profile"
+                                        isBeam
+                                        containerClass="mt-10 max-content"
+                                        onClick={handleDelete}
                                     />
                                 </div>
                             </div>
                         </div>
+
+                        <div className="flex-1 flex justify-between gap-4 flex-wrap">
+                            <div className="bg-[#F1F0FF] p-4 rounded-md flex gap-4 w-full md:w-[48%] xl:w-[45%] 2xl:w-[48%]">
+                                <div className="flex-1 flex flex-col items-center">
+                                    <h1 className="text-xl font-semibold">{user.status ? "Active" : "Inactive"}</h1>
+                                    <span className="text-sm text-gray-400 mb-8">Status</span>
+                                    <div className="flex items-center justify-center w-full">
+                                        <img
+                                            src="/status.png"
+                                            alt="status"
+                                            width={40}
+                                            height={40}
+                                            className="w-20 h-20 object-contain"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Attendance Chart */}
+                    <div className="w-full lg:w-[100%] h-[650px] mt-4">
+                        <AttendanceChart />
                     </div>
                 </div>
-            </div>
 
-            {/* RIGHT */}
-            <div className="w-full xl:w-1/3 flex flex-col gap-4">
-                <div className="bg-white p-4 rounded-md">
-                    <h1 className="text-xl font-semibold">Shortcuts</h1>
+                {/* RIGHT */}
+                <div className="w-full xl:w-1/3 flex flex-col gap-4">
+                    <div className="bg-white p-4 rounded-md">
+                        <h1 className="text-xl font-semibold">Shortcuts</h1>
+                    </div>
+                    <Appointments />
                 </div>
-                <Appointments />
-            </div>
 
-            {/* Update Modal */}
-            {isModalOpen && <UpdateUserModal user={user} onClose={() => setIsModalOpen(false)} onUpdate={handleUserUpdate} />}
-        </div>
+                {/* Update Modal */}
+                {isModalOpen && <UpdateUserModal user={user} onClose={() => setIsModalOpen(false)} onUpdate={handleUserUpdate} />}
+            </div>
+        </section>
     );
 };
 

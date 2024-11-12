@@ -10,6 +10,9 @@ const Navbar = () => {
             const token = localStorage.getItem("token");
             const userId = localStorage.getItem("userId");
 
+            console.log("User ID:", userId);
+            console.log("Token:", token);
+
             if (!token || !userId) {
                 console.log("No user ID or token found");
                 return;
@@ -18,17 +21,21 @@ const Navbar = () => {
             try {
                 const response = await api.get(`/users/${userId}`, {
                     headers: {
-                        Authorization: `Bearer ${token}`, // Pass the token in headers for authorization
+                        Authorization: `Bearer ${token}`,
                     },
                 });
-                setUser(response.data); // Assuming response contains user details
+                setUser(response.data);
             } catch (error) {
-                console.error("Error fetching user data:", error);
+                if (error.response && error.response.status === 404) {
+                    console.error("User not found.");
+                } else {
+                    console.error("Error fetching user data:", error);
+                }
             }
         };
 
         fetchUserData();
-    }, []); // Empty dependency array means it runs only once after component mounts
+    }, []);
 
     return (
         <div className="flex items-center justify-between p-4 bg-teal-50">
@@ -52,7 +59,7 @@ const Navbar = () => {
                 </div>
                 <div className="flex flex-col">
                     <span className="text-xs leading-3 font-medium">
-                        {user ? user.name : "Loading..."} {/* Display user name or loading */}
+                        {user ? user.name : "Loading..."}
                     </span>
                     <span className="text-[12px] text-gray-500 text-right">Admin</span>
                 </div>
