@@ -12,6 +12,7 @@ import Calendar from "./pages/calendar/Calendar";
 import Profile from "./pages/profile";
 
 import { UserProvider } from "./userContext";
+import SettingsPage from "./pages/SettingsPage";
 
 const App = () => {
   return (
@@ -30,6 +31,7 @@ const App = () => {
             <Route path="/appoinments" element={<Appointments />} />
             <Route path="/calendar" element={<Calendar />} />
             <Route path="/profile/:id" element={<Profile />} />
+            <Route path="/settings" element={<SettingsPage />} />
           </Route>
         </Routes>
       </Router>
